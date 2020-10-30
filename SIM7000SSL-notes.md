@@ -38,3 +38,22 @@ Connection: close
 
 
 ```
+
+### Using the integrated HTTPS client
+
+This will not be used in the TinyGSM implementation, but shows that there is hope for SSL to work.
+```
+at+cnact=1,"dr.m2m.ch"
+at+cnact?
+at+cacid=0
+at+csslcfg="sslversion",0,3
+at+casslcfg=0,ssl,1
+at+shconf="BODYLEN",350
+at+shconf="HEADERLEN",350
+at+shconf="URL","https://eende.net:443"
+at+shconn
+at+shbod="FOOBAR",6
+at+shreq="https://eende.net/test.txt",1 --> should return +SHREQ: "GET",200,65
+at+shread=0,65
+at+shdisc
+```
