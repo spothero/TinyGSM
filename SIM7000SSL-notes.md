@@ -26,7 +26,7 @@ at+caopen=0,"eende.net",443
 Trying to get this small text file: https://eende.net/test.txt.
 It should work if using SSL. When this file is accessed using plain http, a "301 Moved Permanently" error is returned by the server.
 
-The value "10000" means that the timeout for entering the GET request is 10s. The line endings in the GET request must be CRLF (double-check your terminal configuration).
+The value "10000" means that the timeout for entering the GET request is 10s. The line endings in the GET request must be CRLF (double-check your terminal configuration, I ended up using CuteCom and its send file function).
 
 ```
 AT+CASEND=0,71,10000
