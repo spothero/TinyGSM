@@ -12,7 +12,9 @@
 // #define TINY_GSM_DEBUG Serial
 // #define TINY_GSM_USE_HEX
 
-#define TINY_GSM_MUX_COUNT 8
+#ifndef TINY_GSM_MUX_COUNT
+  #define TINY_GSM_MUX_COUNT 8
+#endif
 #define TINY_GSM_BUFFER_READ_AND_CHECK_SIZE
 
 #include "TinyGsmBattery.tpp"
