@@ -30,7 +30,11 @@ typedef TinyGsmSim800::GsmClientSim800 TinyGsmClient;
 #include "TinyGsmClientSIM7000.h"
 typedef TinyGsmSim7000                   TinyGsm;
 typedef TinyGsmSim7000::GsmClientSim7000 TinyGsmClient;
-// typedef TinyGsmSim7000::GsmClientSecureSim7000 TinyGsmClientSecure; TODO!
+
+#elif defined(TINY_GSM_MODEM_SIM7000_SECURE)
+#include "TinyGsmClientSIM7000Secure.h"
+typedef TinyGsmSim7000Secure                         TinyGsm;
+typedef TinyGsmSim7000Secure::GsmClientSecureSim7000 TinyGsmClientSecure;
 
 #elif defined(TINY_GSM_MODEM_SIM5320) || defined(TINY_GSM_MODEM_SIM5360) || \
     defined(TINY_GSM_MODEM_SIM5300) || defined(TINY_GSM_MODEM_SIM7100)
