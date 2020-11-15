@@ -490,7 +490,6 @@ class TinyGsmSim7000CA : public TinyGsmModem<TinyGsmSim7000CA>,
   }
 
   int16_t modemSend(const void* buff, size_t len, uint8_t mux) {
-    SerialMon.println("modemSend()");
     sendAT(GF("+CASEND="), mux, ",", len);
     if (waitResponse(GF(">")) != 1) { return 0; }
 
@@ -507,7 +506,6 @@ class TinyGsmSim7000CA : public TinyGsmModem<TinyGsmSim7000CA>,
 
   // TODO: find out why this method is not called by the HTTP example
   size_t modemRead(size_t size, uint8_t mux) {
-    SerialMon.println("modemRead()");
     if (!sockets[mux]) return 0;
 
     sendAT(GF("+CARECV="), mux, ',', (uint16_t)size);
@@ -534,13 +532,11 @@ class TinyGsmSim7000CA : public TinyGsmModem<TinyGsmSim7000CA>,
 
   // Not possible to check the number of characters remaining in buffer
   size_t modemGetAvailable(uint8_t mux) {
-    SerialMon.println("modemGetAvailable()");
     return 0;
   }
 
   // TODO: update this method
   bool modemGetConnected(uint8_t mux) {
-    SerialMon.println("modemGetConnected()");
     sendAT(GF("+CIPSTATUS="), mux);
     waitResponse(GF("+CIPSTATUS"));
     int8_t res = waitResponse(GF(",\"CONNECTED\""), GF(",\"CLOSED\""),
