@@ -12,9 +12,7 @@
 // #define TINY_GSM_DEBUG Serial
 // #define TINY_GSM_USE_HEX
 
-#ifndef TINY_GSM_MUX_COUNT
-  #define TINY_GSM_MUX_COUNT 8
-#endif
+#define TINY_GSM_MUX_COUNT 8
 #define TINY_GSM_BUFFER_READ_AND_CHECK_SIZE
 
 #include "TinyGsmBattery.tpp"
@@ -120,7 +118,27 @@ class TinyGsmSim7000 : public TinyGsmModem<TinyGsmSim7000>,
    * Inner Secure Client
    */
 
-  // See TinyGsmClientSIM7000Secure.h
+  /*TODO(?))
+  class GsmClientSecureSIM7000 : public GsmClientSim7000
+  {
+  public:
+    GsmClientSecure() {}
+
+    GsmClientSecure(TinyGsmSim7000& modem, uint8_t mux = 0)
+     : public GsmClient(modem, mux)
+    {}
+
+  public:
+    int connect(const char* host, uint16_t port, int timeout_s) override {
+      stop();
+      TINY_GSM_YIELD();
+      rx.clear();
+      sock_connected = at->modemConnect(host, port, mux, true, timeout_s);
+      return sock_connected;
+    }
+    TINY_GSM_CLIENT_CONNECT_OVERRIDES
+  };
+  */
 
   /*
    * Constructor
@@ -275,7 +293,7 @@ class TinyGsmSim7000 : public TinyGsmModem<TinyGsmSim7000>,
     return res;
   }
 
-  virtual String getLocalIPImpl() {
+  String getLocalIPImpl() {
     sendAT(GF("+CIFSR;E0"));
     String res;
     if (waitResponse(10000L, res) != 1) { return ""; }
@@ -289,7 +307,7 @@ class TinyGsmSim7000 : public TinyGsmModem<TinyGsmSim7000>,
    * GPRS functions
    */
  protected:
-  virtual bool gprsConnectImpl(const char* apn, const char* user = NULL,
+  bool gprsConnectImpl(const char* apn, const char* user = NULL,
                        const char* pwd = NULL) {
     gprsDisconnect();
 
@@ -358,7 +376,7 @@ class TinyGsmSim7000 : public TinyGsmModem<TinyGsmSim7000>,
     return true;
   }
 
-  virtual bool gprsDisconnectImpl() {
+  bool gprsDisconnectImpl() {
     // Shut the TCP/IP connection
     // CIPSHUT will close *all* open connections
     sendAT(GF("+CIPSHUT"));
